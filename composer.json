@@ -1,0 +1,23 @@
+{
+    "name": "digkill/mediarise-sberecom-payment",
+    "description": "Payment module for payment processing Sber Ecom",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Digkill\\MediariseSberecomPayment\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Digkill",
+            "email": "alexcatleva@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    }
+}

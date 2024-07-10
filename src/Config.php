@@ -6,19 +6,52 @@ use Throwable;
 
 class Config
 {
+    const VALIDITY_DAYS = 7;
+
     private array $config;
 
-    public function __construct(array $config)
+    public function __construct()
     {
-        $this->config = $config;
+        $this->config = [
+            'authInfo' => [
+                'userName' => getenv('SBER_ECOM_API_USERNAME', ''),
+                'password' => getenv('SBER_ECOM_API_PASSWORD', ''),
+            ],
+            'endpoints' => [
+                'restUrl' => rtrim(getenv('SBER_ECOM_URL', 'https://ecommerce.sberbank.ru/ecomm/gw/partner/api/v1'), '/'),
+                'register' => rtrim(getenv('SBER_ECOM_URL', 'https://ecommerce.sberbank.ru/ecomm/gw/partner/api/v1'), '/') . '/register.do',
+                'status' => rtrim(getenv('SBER_ECOM_URL', 'https://ecommerce.sberbank.ru/ecomm/gw/partner/api/v1'), '/') . '/getOrderStatusExtended.do',
+                'cancel' => rtrim(getenv('SBER_ECOM_URL', 'https://ecommerce.sberbank.ru/ecomm/gw/partner/api/v1'), '/') . '/reverse.do',
+                'refund' => rtrim(getenv('SBER_ECOM_URL', 'https://ecommerce.sberbank.ru/ecomm/gw/partner/api/v1'), '/') . '/refund.do',
+                'getReceiptStatus' => rtrim(getenv('REST_SBER_ECOM_OFD_URL', 'https://ecommerce.sberbank.ru/ecomm/gw/partner/api/ofd/v1'), '/') . '/getReceiptStatus',
+            ],
+            'successUrl' => getenv('SUCCESS_URL', ''),
+            'failUrl' => getenv('FAIL_URL', ''),
+            'returnUrl' => getenv('RETURN_URL', ''),
+            'validityDay' => getenv('SBER_ECOM_VALIDITY', self::VALIDITY_DAYS),
+            'isTest' => false,
+        ];
+    }
+
+    public function getAuthInfo()
+    {
+
+        $authInfo = $this->config['authInfo'] ?? null;
+
+        if ($authInfo === null) {
+            throw new \Exception('AuthInfo not set');
+        }
+
+        return $authInfo;
     }
 
     /**
      * @throws Throwable
      */
-    public function getRegisterUrl(): string
+    public function getRegister(): string
     {
         $registerUrl = $this->config['endpoints']['register'] ?? null;
+
 
         if ($registerUrl === null) {
             throw new \Exception('Url register not set');
@@ -30,7 +63,7 @@ class Config
     /**
      * @throws Throwable
      */
-    public function getStatusUrl(): string
+    public function getStatus(): string
     {
         $statusUrl = $this->config['endpoints']['status'] ?? null;
 
@@ -44,7 +77,7 @@ class Config
     /**
      * @throws Throwable
      */
-    public function getCancelUrl(): string
+    public function getCancel(): string
     {
         $cancelUrl = $this->config['endpoints']['cancel'] ?? null;
 
@@ -58,7 +91,7 @@ class Config
     /**
      * @throws Throwable
      */
-    public function getRefundUrl(): string
+    public function getRefund(): string
     {
         $refundUrl = $this->config['endpoints']['refund'] ?? null;
 
@@ -72,7 +105,7 @@ class Config
     /**
      * @throws Throwable
      */
-    public function getReceiptStatusUrl(): string
+    public function getReceiptStatus(): string
     {
         $receiptStatusUrl = $this->config['endpoints']['getReceiptStatus'] ?? null;
 

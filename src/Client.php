@@ -7,29 +7,31 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Throwable;
 
 class Client
 {
+    private Config $config;
     private array $auth;
 
-    public function __construct($auth)
+    public function __construct(Config $config)
     {
-        $this->auth = $auth;
+        $this->config = $config;
+        $this->auth = $this->config->getAuthInfo();
     }
 
     public function request(string $endpoint, array $data, string $context = null): array
     {
-        if (!key_exists($endpoint, $this->endpoints)) {
-            throw new SberException("Эндпоинт: \'{$endpoint}\' не найден", ResponseAlias::HTTP_NOT_FOUND);
-        }
+        $method = 'get' . ucfirst($endpoint);
+
 
         try {
-           // Log::info($context ?? __METHOD__ . ' request to ' . $this->endpoints[$endpoint], $data);
+            // Log::info($context ?? __METHOD__ . ' request to ' . $this->endpoints[$endpoint], $data);
 
             $resp = (new \GuzzleHttp\Client())
                 ->request(
                     'POST',
-                    $this->endpoints[$endpoint],
+                    $this->config->getRegister(),
                     [
                         RequestOptions::JSON => array_merge($this->auth, $data),
 
@@ -39,17 +41,16 @@ class Client
                         'verify' => false,
                     ]
                 );
-            // dd($resp);
+
 
             $this->checkResponse($resp);
         } catch (Throwable $e) {
 
 
-
             $this->handleException($e, $context ?? __METHOD__);
         } finally {
             if (isset($resp)) {
-                Log::info($context ?? __METHOD__ . ' response: ', [(string)$resp->getBody()]);
+                //   Log::info($context ?? __METHOD__ . ' response: ', [(string)$resp->getBody()]);
             }
         }
 

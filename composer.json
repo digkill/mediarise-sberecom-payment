@@ -1,23 +1,26 @@
 {
-    "name": "digkill/mediarise-sberecom-payment",
-    "description": "Payment module for payment processing Sber Ecom",
-    "type": "project",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Digkill\\MediariseSberecomPayment\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Digkill",
-            "email": "alexcatleva@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=7.4"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0"
+  "name": "digkill/mediarise-sberecom-payment",
+  "description": "Payment module for payment processing Sber Ecom",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Digkill\\MediariseSberecomPayment\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "Digkill",
+      "email": "alexcatleva@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.8",
+    "symfony/http-foundation": "^7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  }
 }

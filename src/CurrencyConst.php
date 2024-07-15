@@ -4,8 +4,8 @@ namespace Digkill\MediariseSberecomPayment;
 
 enum CurrencyConst: string
 {
-    const RUB = '643';
-    const USD = '840';
-    const EUR = '978';
-    const CNY = '156';
+    case RUB = '643';
+    case USD = '840';
+    case EUR = '978';
+    case CNY = '156';
 }

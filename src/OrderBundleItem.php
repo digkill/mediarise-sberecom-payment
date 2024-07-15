@@ -9,8 +9,16 @@ class OrderBundleItem
     private string $name = '';
     private int $quantityValue = 1;
     private string $quantityMeasure = 'шт';
-
     private string $measurementUnit = '';
+
+    private int $itemPrice = 0;
+    private int $itemAmount = 0;
+
+    private string $paymentMethod = PaymentMethod::FULL_PAYMENT->value;
+
+    private string $paymentObject = '';
+
+    private int $taxType = 0;
 
 
 
